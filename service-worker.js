@@ -1,11 +1,49 @@
-/* global caches, fetch, Response, self */
+/* global caches, fetch, Response, self, URL */
 
-const CACHE_NAME = 'training-app-cache-v4';
+const CACHE_NAME = 'training-app-cache-v5';
 const APP_SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png'];
-const PRECACHE_PATH_PREFIXES = ['./assets/', './icons/', './resources/', './src/data/'];
+const CACHEABLE_PATH_PREFIXES = ['/assets/', '/icons/', '/resources/', '/src/data/'];
+
+const getUrlPath = (url) => {
+  try {
+    const parsedUrl = new URL(url, self.location.origin);
+
+    if (parsedUrl.origin !== self.location.origin) {
+      return '';
+    }
+
+    return parsedUrl.pathname;
+  } catch {
+    return '';
+  }
+};
+
+const isCacheableUrl = (url) => {
+  const path = getUrlPath(url);
+
+  return CACHEABLE_PATH_PREFIXES.some((prefix) => path.startsWith(prefix));
+};
+
+const getIndexAssetUrls = async () => {
+  const response = await fetch('./index.html', { cache: 'no-cache' });
+  const html = await response.text();
+  const urls = [...html.matchAll(/\b(?:href|src)=["']([^"']+)["']/g)].map((match) => match[1]);
+
+  return [...new Set(urls.filter(isCacheableUrl))];
+};
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(async (cache) => {
+      await cache.addAll(APP_SHELL);
+
+      const assetUrls = await getIndexAssetUrls().catch(() => []);
+
+      if (assetUrls.length > 0) {
+        await cache.addAll(assetUrls);
+      }
+    })
+  );
   self.skipWaiting();
 });
 
@@ -23,9 +61,7 @@ self.addEventListener('message', (event) => {
     return;
   }
 
-  const resourceUrls = [...new Set(event.data.urls)].filter(
-    (url) => typeof url === 'string' && PRECACHE_PATH_PREFIXES.some((prefix) => url.startsWith(prefix))
-  );
+  const resourceUrls = [...new Set(event.data.urls)].filter((url) => typeof url === 'string' && isCacheableUrl(url));
 
   if (resourceUrls.length === 0) {
     return;
