@@ -1,7 +1,9 @@
 /* global caches, fetch, Response, self, URL */
 
-const CACHE_NAME = 'training-app-cache-v5';
-const APP_SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png'];
+const CACHE_VERSION = 'v6';
+const CACHE_NAME = `training-app-cache-${CACHE_VERSION}`;
+const INDEX_CACHE_KEY = './index.html';
+const APP_SHELL = [INDEX_CACHE_KEY, './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png'];
 const CACHEABLE_PATH_PREFIXES = ['/assets/', '/icons/', '/resources/', '/src/data/'];
 
 const getUrlPath = (url) => {
@@ -24,6 +26,22 @@ const isCacheableUrl = (url) => {
   return CACHEABLE_PATH_PREFIXES.some((prefix) => path.startsWith(prefix));
 };
 
+const isNavigationRequest = (request) => request.mode === 'navigate' || request.destination === 'document';
+
+const isDataRequest = (request) => getUrlPath(request.url).startsWith('/src/data/');
+
+const cacheFreshUrls = async (cache, urls) => {
+  await Promise.all(
+    urls.map(async (url) => {
+      const response = await fetch(url, { cache: 'reload' });
+      if (!response.ok) {
+        throw new Error(`Unable to cache ${url}`);
+      }
+      await cache.put(url, response);
+    })
+  );
+};
+
 const getIndexAssetUrls = async () => {
   const response = await fetch('./index.html', { cache: 'no-cache' });
   const html = await response.text();
@@ -32,15 +50,52 @@ const getIndexAssetUrls = async () => {
   return [...new Set(urls.filter(isCacheableUrl))];
 };
 
+const networkFirst = async (request, fallbackKey = request) => {
+  try {
+    // Revalidate through the browser HTTP cache instead of accepting a stale app shell.
+    const response = await fetch(request, { cache: 'no-cache' });
+    if (response.ok) {
+      const copy = response.clone();
+      const cache = await caches.open(CACHE_NAME);
+      await cache.put(fallbackKey, copy);
+    }
+
+    return response;
+  } catch {
+    return (await caches.match(fallbackKey)) || Response.error();
+  }
+};
+
+const cacheFirst = async (request) => {
+  const cached = await caches.match(request);
+
+  if (cached) {
+    return cached;
+  }
+
+  try {
+    const response = await fetch(request, { cache: 'no-cache' });
+    if (response.ok) {
+      const copy = response.clone();
+      const cache = await caches.open(CACHE_NAME);
+      await cache.put(request, copy);
+    }
+
+    return response;
+  } catch {
+    return Response.error();
+  }
+};
+
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(async (cache) => {
-      await cache.addAll(APP_SHELL);
+      await cacheFreshUrls(cache, APP_SHELL);
 
       const assetUrls = await getIndexAssetUrls().catch(() => []);
 
       if (assetUrls.length > 0) {
-        await cache.addAll(assetUrls);
+        await cacheFreshUrls(cache, assetUrls);
       }
     })
   );
@@ -67,7 +122,7 @@ self.addEventListener('message', (event) => {
     return;
   }
 
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(resourceUrls)));
+  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cacheFreshUrls(cache, resourceUrls)));
 });
 
 self.addEventListener('fetch', (event) => {
@@ -75,25 +130,18 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) {
-        return cached;
-      }
+  if (isNavigationRequest(event.request)) {
+    event.respondWith(networkFirst(event.request, INDEX_CACHE_KEY));
+    return;
+  }
 
-      return fetch(event.request)
-        .then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-          return response;
-        })
-        .catch(() => {
-          if (event.request.mode === 'navigate') {
-            return caches.match('./index.html');
-          }
+  if (isDataRequest(event.request)) {
+    event.respondWith(networkFirst(event.request));
+    return;
+  }
 
-          return Response.error();
-        });
-    })
-  );
+  // Vite emits hashed build assets under /assets; other listed paths are static offline resources.
+  if (isCacheableUrl(event.request.url)) {
+    event.respondWith(cacheFirst(event.request));
+  }
 });
