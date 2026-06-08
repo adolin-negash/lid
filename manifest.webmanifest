@@ -1,7 +1,7 @@
 {
   "name": "LID Test Training",
   "short_name": "LID Test",
-  "description": "Offline-ready training app for LID test practice.",
+  "description": "LID test.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
