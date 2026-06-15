@@ -8755,5 +8755,289 @@
     ],
     "correctOptionId": "1",
     "tags": []
+  },
+  {
+    "id": "301",
+    "question": "Welches Wappen gehört zum Bundesland Berlin?",
+    "options": [
+      {
+        "id": "1",
+        "text": "Bild 1",
+        "translation": "Изображение 1"
+      },
+      {
+        "id": "2",
+        "text": "Bild 2",
+        "translation": "Изображение 2"
+      },
+      {
+        "id": "3",
+        "text": "Bild 3",
+        "translation": "Изображение 3"
+      },
+      {
+        "id": "4",
+        "text": "Bild 4",
+        "translation": "Изображение 4"
+      }
+    ],
+    "correctOptionId": "4",
+    "image": {
+      "url": "img_301.png"
+    },
+    "tags": ["berlin"],
+    "questionTranslation": "Какой герб принадлежит земле Берлин?"
+  },
+  {
+    "id": "302",
+    "question": "Welches ist ein Bezirk von Berlin?",
+    "questionTranslation": "Что является районом Берлина?",
+    "options": [
+      {
+        "id": "1",
+        "text": "Altona",
+        "translation": "Альтона"
+      },
+      {
+        "id": "2",
+        "text": "Prignitz",
+        "translation": "Пригниц"
+      },
+      {
+        "id": "3",
+        "text": "Pankow",
+        "translation": "Панков"
+      },
+      {
+        "id": "4",
+        "text": "Mecklenburgische Seenplatte",
+        "translation": "Мекленбургская Зеенплатте"
+      }
+    ],
+    "correctOptionId": "3",
+    "tags": ["berlin"]
+  },
+  {
+    "id": "303",
+    "question": "Für wie viele Jahre wird das Landesparlament in Berlin gewählt?",
+    "questionTranslation": "На сколько лет избирается парламент земли Берлин?",
+    "options": [
+      {
+        "id": "1",
+        "text": "3"
+      },
+      {
+        "id": "2",
+        "text": "4"
+      },
+      {
+        "id": "3",
+        "text": "5"
+      },
+      {
+        "id": "4",
+        "text": "6"
+      }
+    ],
+    "correctOptionId": "3",
+    "tags": ["berlin"]
+  },
+  {
+    "id": "304",
+    "question": "Ab welchem Alter darf man in Berlin bei Kommunalwahlen (Wahl der Bezirksverordnetenversammlung) wählen?",
+    "questionTranslation": "С какого возраста можно голосовать на местных выборах (выборах в районное собрание) в Берлине?",
+    "options": [
+      {
+        "id": "1",
+        "text": "14"
+      },
+      {
+        "id": "2",
+        "text": "16"
+      },
+      {
+        "id": "3",
+        "text": "18"
+      },
+      {
+        "id": "4",
+        "text": "20"
+      }
+    ],
+    "correctOptionId": "2",
+    "tags": ["berlin"]
+  },
+  {
+    "id": "305",
+    "question": "Welche Farben hat die Landesflagge von Berlin?",
+    "questionTranslation": "Какие цвета у государственного флага Берлина?",
+    "options": [
+      {
+        "id": "1",
+        "text": "blau-weiß-rot",
+        "translation": "сине-бело-красный"
+      },
+      {
+        "id": "2",
+        "text": "weiß-rot",
+        "translation": "бело-красный"
+      },
+      {
+        "id": "3",
+        "text": "grün-weiß-rot",
+        "translation": "зелено-бело-красный"
+      },
+      {
+        "id": "4",
+        "text": "schwarz-gold",
+        "translation": "черно-золотой"
+      }
+    ],
+    "correctOptionId": "2",
+    "tags": ["berlin"]
+  },
+  {
+    "id": "306",
+    "question": "Wo können Sie sich in Berlin über politische Themen informieren?",
+    "questionTranslation": "Где можно найти информацию о политических вопросах в Берлине?",
+    "options": [
+      {
+        "id": "1",
+        "text": "beim Ordnungsamt der Gemeinde",
+        "translation": "в муниципальном управлении общественного порядка"
+      },
+      {
+        "id": "2",
+        "text": "bei den Kirchen",
+        "translation": "в церквях"
+      },
+      {
+        "id": "3",
+        "text": "bei der Verbraucherzentrale",
+        "translation": "в центре консультаций для потребителей"
+      },
+      {
+        "id": "4",
+        "text": "bei der Landeszentrale für politische Bildung",
+        "translation": "в государственном агентстве политического образования"
+      }
+    ],
+    "correctOptionId": "4",
+    "tags": ["berlin"]
+  },
+  {
+    "id": "307",
+    "question": "Welches Bundesland ist ein Stadtstaat?",
+    "questionTranslation": "Какой немецкий штат является городом-государством?",
+    "options": [
+      {
+        "id": "1",
+        "text": "Berlin",
+        "translation": "Берлин"
+      },
+      {
+        "id": "2",
+        "text": "Saarland",
+        "translation": "Саарланд"
+      },
+      {
+        "id": "3",
+        "text": "Brandenburg",
+        "translation": "Бранденбург"
+      },
+      {
+        "id": "4",
+        "text": "Hessen",
+        "translation": "Гессен"
+      }
+    ],
+    "correctOptionId": "1",
+    "tags": ["berlin"]
+  },
+  {
+    "id": "308",
+    "question": "Welches Bundesland ist Berlin?",
+    "questionTranslation": "Какой немецкий штат является Берлином?",
+    "options": [
+      {
+        "id": "1",
+        "text": "1"
+      },
+      {
+        "id": "2",
+        "text": "2"
+      },
+      {
+        "id": "3",
+        "text": "3"
+      },
+      {
+        "id": "4",
+        "text": "4"
+      }
+    ],
+    "image": {
+      "url": "img_308.png"
+    },
+    "correctOptionId": "4",
+    "tags": ["berlin"]
+  },
+  {
+    "id": "309",
+    "question": "Wie nennt man die Regierungschefin/den Regierungschef des Stadtstaates Berlin?",
+    "questionTranslation": "Как зовут главу правительства города-государства Берлин?",
+    "options": [
+      {
+        "id": "1",
+        "text": "Ministerpräsidentin/Ministerpräsident",
+        "translation": "Министр-президент"
+      },
+      {
+        "id": "2",
+        "text": "Oberbürgermeisterin/Oberbürgermeister",
+        "translation": "Мэр"
+      },
+      {
+        "id": "3",
+        "text": "Präsidentin/Präsident des Senates",
+        "translation": "Председатель Сената"
+      },
+      {
+        "id": "4",
+        "text": "Regierende Bürgermeisterin/Regierender Bürgermeister",
+        "translation": "Мэр города-государства"
+      }
+    ],
+    "correctOptionId": "4",
+    "tags": ["berlin"]
+  },
+  {
+    "id": "310",
+    "question": "Welche Senatorin/welchen Senator hat Berlin nicht?",
+    "questionTranslation": "Какого сенатора нет в Берлине?",
+    "options": [
+      {
+        "id": "1",
+        "text": "Finanzsenatorin/Finanzsenator",
+        "translation": "Сенатор по финансам"
+      },
+      {
+        "id": "2",
+        "text": "Innensenatorin/Innensenator",
+        "translation": "Сенатор по внутренним делам"
+      },
+      {
+        "id": "3",
+        "text": "Senatorin/Senator für Außenbeziehungen",
+        "translation": "Сенатор по иностранным делам"
+      },
+      {
+        "id": "4",
+        "text": "Justizsenatorin/Justizsenator",
+        "translation": "Сенатор по юстиции"
+      }
+    ],
+    "correctOptionId": "3",
+    "tags": ["berlin"]
   }
 ]
