@@ -8785,7 +8785,7 @@
     "image": {
       "url": "img_301.png"
     },
-    "tags": ["berlin"],
+    "tags": ["berlin", "image"],
     "questionTranslation": "Какой герб принадлежит земле Берлин?"
   },
   {
@@ -8980,7 +8980,7 @@
       "url": "img_308.png"
     },
     "correctOptionId": "4",
-    "tags": ["berlin"]
+    "tags": ["berlin", "image"]
   },
   {
     "id": "309",
